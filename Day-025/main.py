@@ -35,7 +35,7 @@ import csv
 
 import pandas as pd
 
-data = pd.read_csv("Day-025/resources/weather_data.csv")
+# data = pd.read_csv("Day-025/resources/weather_data.csv")
 # # print(data)
 # temp = data['temp']
 # suma = 0
@@ -53,9 +53,42 @@ data = pd.read_csv("Day-025/resources/weather_data.csv")
 
 """This will convert Monday's temp from C to F"""
 # temp = data[data['temp'] == data['temp'].max()]
-temp = data[data['temp'] == data['temp'].min()]
-cel = temp['temp']
-fah = (cel * (9/5)) + 32
-print(fah)
+# temp = data[data['temp'] == data['temp'].min()]
+# cel = temp['temp']
+# fah = (cel * (9/5)) + 32
+# print(fah)
+
+
+"""This program get how many of each squirell are by fur color """
+
+data = pd.read_csv("Day-025/resources/squirrel_data.csv")
+# print(data.head)
+# print(data.info())
+
+gray_fur = len(data[data['Primary Fur Color'] == "Gray"])
+black_fur = len(data[data["Primary Fur Color"] == "Black"])
+red_fur = len(data[data["Primary Fur Color"] == "Cinnamon"])
+
+fur_color = {
+    "Fur Color": ["Gray", "Black", "Red"],
+    "Count": [gray_fur, black_fur, red_fur]
+}
+
+"""
+This create a Pandas Data Frame (similiar to a Excel sheet) and then convert it to
+a CSV file named fur_data.csv. Data Frame takes a dictionary
+"""
+fur_data = pd.DataFrame(fur_color)
+fur_data.to_csv("fur_data.csv")
+
+new_data = pd.read_csv("fur_data.csv")
+print(new_data.head)
+
+
+
+
+
+# print(gray_fur)
+
 
 

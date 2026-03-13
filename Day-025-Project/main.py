@@ -25,6 +25,7 @@ while is_game:
     answer_state = screen.textinput(title=f"{score}/50 Guess a State", prompt="What's another State name?").title() 
 
     if answer_state == "Exit" or answer_state == 'E':
+        
         for state in states:
             if state not in right_guess:
                 missing_state.append(state)

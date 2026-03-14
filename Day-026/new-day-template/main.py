@@ -30,6 +30,9 @@ print(new_name_list)
 # n = "elvis"
 # print(len(n))
 
+num = [2,5,3,7] 
+new_num_list = [n * 3 for n in num if n > 4]
+print(new_num_list)
 
 
 

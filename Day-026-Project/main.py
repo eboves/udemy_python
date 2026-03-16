@@ -15,7 +15,7 @@ print(user_input)
 each_user_input_letter = [letter for letter in user_input]
 print(each_user_input_letter)
 
-new_list = [new_item for item in list if test]
+# new_list = [new_item for item in list if test]
 # compare each letter from then user input to see if code of that letter
 phoneric_list = [new_dict[letter] for letter in each_user_input_letter if letter in new_dict] 
 print(phoneric_list)

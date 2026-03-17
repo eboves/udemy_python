@@ -13,47 +13,32 @@ Course: Udemy - 100 Days of Code: The Complete Python Pro Bootcamp
 import tkinter as tk
 import tkinter.ttk
 
-# window = tkinter.ttk()
+def count_click():
+    # label['text'] = "I got clicked"
+    # label.config(text="I got clicked")
+    user_input = input.get()
+    label.config(text=user_input)
+
 window = tk.Tk()
 window.title("First GUI Project")
 window.minsize(width='500', height='300')
 
-
-
 label = tk.Label(text="Hello", font=('Arial',24,'bold'))
-label.pack()
+# label.pack()
+label.grid(column=0,row=0)
 
 input = tk.Entry()
-input.pack()
+# print(input.get())
+# input.pack()
+input.grid(column=3, row=2)
 
+button = tk.Button(text="click me", command=count_click)
+# buttom.pack()
+button.grid(column=1,row=1)
 
-print(input)
-
-
-def count_click():
-    # label['text'] = "I got clicked"
-    # label.config(text="I got clicked")
-    print("before get")
-    print(input.get())
-
-    user_input = input.get()
-    label.config(text=user_input)
-    print("after config")
-
-
-
-
-
-
-buttom = tk.Button(text="click me", command=count_click)
-buttom.pack()
-
-
-
-
-
-
-
+button_1 = tk.Button(text="new buttom", command=count_click)
+# button.pack()
+button_1.grid(column=2, row=0)
 
 
 window.mainloop()

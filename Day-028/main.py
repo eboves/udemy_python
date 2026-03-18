@@ -20,7 +20,7 @@ LONG_BREAK_MIN = 20
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = tk.Tk()
-window.title("Pomodore")
+window.title("Pomodoro")
 # window.minsize(width=500, height=300)
 window.config(padx=100, pady=50)
 
@@ -41,6 +41,7 @@ reset_btn = tk.Button(text="Reset", command="")
 reset_btn.grid(column=2, row=2)
 
 complete_check = tk.Checkbutton(text="✔")
+complete_check.grid(column=1, row=3)
 
 
 

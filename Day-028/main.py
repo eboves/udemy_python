@@ -1,5 +1,6 @@
 
 import tkinter as tk
+import math 
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -7,22 +8,71 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
+# WORK_MIN = 25
+WORK_MIN = 0.25
+SHORT_BREAK_MIN = 0.25
+# SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+reps = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 
+def reset_timer():
+    global reps 
+    window.after_cancel(timer)
+    complete_checks.config(text="")
+    timer_label.config(text="Timer", bg=GREEN, font=(FONT_NAME, 20, "bold"))
+    canvas.itemconfig(timer_count,text="00:00")  
+    reps = 0
+
+
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
-    count_down(5)
+    global reps 
+    reps += 1
+    work_section = WORK_MIN * 60
+    short_break_section = SHORT_BREAK_MIN * 60
+    long_break_section = LONG_BREAK_MIN * 60
+    
+
+    
+    if reps % 8 == 0:
+        count_down(long_break_section) 
+        # print(reps, "long brake")
+        timer_label.config(text="Long Break", fg=RED, font=(FONT_NAME, 20, "bold"))
+    elif reps % 2 == 0:
+        count_down(short_break_section)
+        timer_label.config(text="Short Break", fg=PINK, font=(FONT_NAME, 20, "bold"))
+        print(reps, "short brake")
+    else:
+        count_down(work_section)
+        timer_label.config(text="Working Section", fg=GREEN, font=(FONT_NAME, 20, "bold"))
+        print("Working section")
+
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def count_down(count):
+    global reps
     # print(count)
-    canvas.itemconfig(timer_count,text=count)
+    count_min = math.floor(count / 60)
+    count_sec = count % 60
+    if count_sec < 10:
+        count_sec = f"0{count_sec}"
+
+    canvas.itemconfig(timer_count,text=f"{count_min}:{count_sec}")
     if count > 0:
-        window.after(1000, count_down, count - 1 )
+        global timer
+        timer = window.after(1000, count_down, count - 1 )
+    else:
+        start_timer()
+        mark = " "
+        work_session = math.floor(reps/2)
+        for _ in range(work_session):
+            mark += "✔"
+        complete_checks.config(text=mark)
+            
+        
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -44,10 +94,10 @@ timer_label.grid(column=1, row=0)
 start_btn = tk.Button(text="Start", command=start_timer)
 start_btn.grid(column=0, row=2)
 
-reset_btn = tk.Button(text="Reset", command="")
+reset_btn = tk.Button(text="Reset", command=reset_timer)
 reset_btn.grid(column=2, row=2)
 
-complete_checks = tk.Label(text="✔", fg=GREEN)
+complete_checks = tk.Label(fg=GREEN)
 complete_checks.grid(column=1, row=3)
 
 

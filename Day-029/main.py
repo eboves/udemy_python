@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 app = tk.Tk()
 app.title("Password Manager")
@@ -17,14 +18,18 @@ def add_pass():
     email = email_username_entry.get()
     pswd = password_entry.get()
     full_string = f"{web} | {email} | {pswd}" 
-    with open('pass_gen.txt', 'a') as output:
-        output.write(full_string + "/n")
-
-    # email.delete(0, "")
-    # pswd.delete(0, "")
 
 
+    if len(email) == 0 or len(pswd) == 0:
+        messagebox.showinfo(title="Oops", message="Dont leave empty fields")
+    else:
+        is_ok = messagebox.askokcancel(title=website, message=f"This is the information you entered:\n email: {email}\n password: {pswd}\n is this ok to save?")
 
+        if is_ok:
+            with open('pass_gen.txt', 'a') as output:
+                output.write(full_string + "\n")
+                website_entry.delete(0, tk.END)
+                password_entry.delete(0, tk.END)
 
 
 

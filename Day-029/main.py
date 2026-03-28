@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+import pyperclip
 
 app = tk.Tk()
 app.title("Password Manager")
@@ -12,30 +13,26 @@ canvas.create_image(100, 100, image=lock_image)
 canvas.grid(column=1, row=0)
 
 #Password Generator Project
+def generate_password():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
 
-nr_letters = random.randint(8, 10)
-nr_symbols = random.randint(2, 4)
-nr_numbers = random.randint(2, 4)
+    list_letters = [random.choice(letters) for _ in range(nr_letters)]
+    list_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+    list_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
 
-list_letters = [random.choice(letters) for letter in range(nr_letters)]
-list_symbols = [random.choice(symbols) for sym in range(nr_symbols)]
-list_numbers = [random.choice(numbers) for num in range(nr_numbers)]
+    password_list = list_letters + list_symbols + list_numbers
 
+    random.shuffle(password_list)
 
-password_list = list_letters + list_symbols + list_numbers
-
-random.shuffle(password_list)
-
-password = ""
-for char in password_list:
-  password += char
-
-print(f"Your password is: {password}")
-
+    password = "".join(password_list)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
 
 def add_pass():
     # print("hello")
@@ -76,18 +73,19 @@ email_username.grid(row=2, column=0)
 
 # ---- EMAIL/ USER NAME ENTRY FIELD ----
 email_username_entry = tk.Entry(width=35)
+email_username_entry.insert(0, "mamin@aol.com")
 email_username_entry.grid(row=2, column=1, columnspan=2)
 
 # ---- PASSWORD FIELD ----
-password = tk.Label(text='Password: ')
-password.grid(row=3, column=0)
+password_label = tk.Label(text='Password: ')
+password_label.grid(row=3, column=0)
 
 # ---- PASSWORD ENTRY FIELD ----
 password_entry = tk.Entry(width=21)
 password_entry.grid(row= 3, column=1)
 
 # ---- BUTTON FIELD ----
-gen_pass_btn = tk.Button(text='Generate Password')
+gen_pass_btn = tk.Button(text='Generate Password', command=generate_password)
 gen_pass_btn.grid(row=3, column=2)
 
 # ---- BUTTON ENTRY FIELD ----

@@ -2,10 +2,6 @@
 # Keyword Method with iterrows()
 # {new_key:new_value for (index, row) in df.iterrows()}
 
-
-
-
-
 import pandas as pd
 
 data = pd.read_csv("Day-026-Project/nato_phonetic_alphabet.csv")
@@ -29,11 +25,6 @@ def error_handler():
 # compare each letter from then user input to see if code of that letter
 phoneric = error_handler()
 print(phoneric)
-
-
-
-
-
 
 
 # try:

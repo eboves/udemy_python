@@ -49,11 +49,19 @@ def add_pass():
     if len(email) == 0 or len(pswd) == 0:
         messagebox.showinfo(title="Oops", message="Dont leave empty fields")
     else:
+        try:
+            with open('pass_gen.json', 'r') as file:
+                data = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {}
         
-        with open('pass_gen.json', 'w') as output:
-            json.dump(email_pass, output, indent=4)
-            website_entry.delete(0, tk.END)
-            password_entry.delete(0, tk.END)
+        data.update(email_pass)
+
+        with open('pass_gen.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
+        website_entry.delete(0, tk.END)
+        password_entry.delete(0, tk.END)
 
 
 

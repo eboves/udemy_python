@@ -70,12 +70,12 @@ def search_btn():
     try:
         with open('pass_gen.json', 'r') as file:
             data = json.load(file)
-    except:
+    except FileNotFoundError:
         messagebox.showerror(title="FILE ERROR", message="No Data File Found")
     else:
         if website in data:
             email= data[website].get('email')
-            password = data[website].get('pswd')
+            password = data[website]['pswd']
             messagebox.showinfo(title=f"{website}", message=f"Email: {email} \nPassword: {password}")
         else:
             messagebox.showinfo(title="NO WEBSITE", message=f"No Details for Website: {website} Exist!")

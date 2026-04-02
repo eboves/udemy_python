@@ -37,7 +37,7 @@ def generate_password():
 
 def add_pass():
     # print("hello")
-    web = website_entry.get().title()
+    web = website_entry.get()
     email = email_username_entry.get()
     pswd = password_entry.get()
     email_pass = {web:{
@@ -65,25 +65,20 @@ def add_pass():
 
 
 def search_btn():
-    with open('pass_gen.json', 'r') as file:
-        data = json.load(file)
-        print(data)
+    website = website_entry.get()
 
-
-
-
-    print("I was clicked")
-
-
-
-
-
-
-
-
-
-
-
+    try:
+        with open('pass_gen.json', 'r') as file:
+            data = json.load(file)
+    except:
+        messagebox.showerror(title="FILE ERROR", message="No Data File Found")
+    else:
+        if website in data:
+            email= data[website].get('email')
+            password = data[website].get('pswd')
+            messagebox.showinfo(title=f"{website}", message=f"Email: {email} \nPassword: {password}")
+        else:
+            messagebox.showinfo(title="NO WEBSITE", message=f"No Details for Website: {website} Exist!")
 
 
 

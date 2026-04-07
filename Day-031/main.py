@@ -1,4 +1,6 @@
 import tkinter as tk
+import pandas as pd
+import random 
 
 
 # ---- Variables ----
@@ -11,9 +13,18 @@ app = tk.Tk()
 app.title("Flash Card")
 app.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
+# data = pd.DataFrame.to_dict("Day-031/resources/data/french_words.csv")
+data = pd.read_csv("Day-031/resources/data/french_words.csv")
+print(data.head)
 
 
 # ---- Functions ----
+def wrong():
+
+    pass
+
+def right():
+    pass
 
 
 
@@ -35,12 +46,12 @@ card.grid(row=0, column=0, columnspan=2)
 # -- X Button --
 
 wrong_btn_img = tk.PhotoImage(file="Day-031/resources/images/wrong.png")
-wrong_button = tk.Button(image=wrong_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR)
+wrong_button = tk.Button(image=wrong_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR, command=wrong)
 wrong_button.grid(row=1, column=0)
 
 # -- Ok Button --
 right_btn_img = tk.PhotoImage(file="Day-031/resources/images/right.png")
-right_button = tk.Button(image=right_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR)
+right_button = tk.Button(image=right_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR, command=right)
 right_button.grid(row=1, column=1)
 
 

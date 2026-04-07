@@ -26,9 +26,9 @@ card = tk.Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=
 card_front_image = tk.PhotoImage(file="Day-031/resources/images/card_front.png")
 card.create_image(400, 263, image=card_front_image,)
 # -- Title Label --
-title_label = card.create_text(400, 150, text="Title", font=("Ariel", 40, "italic"))
+title_label = card.create_text(400, 150, text="Title", fill="black", font=("Ariel", 40, "italic"))
 # -- Word Label --
-word_label = card. create_text(400, 263, text="Word", font=("Ariel", 60, "bold"))
+word_label = card. create_text(400, 263, text="Word",fill="black" ,font=("Ariel", 60, "bold"))
 card.grid(row=0, column=0, columnspan=2)
 
 

@@ -13,18 +13,27 @@ app = tk.Tk()
 app.title("Flash Card")
 app.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
-# data = pd.DataFrame.to_dict("Day-031/resources/data/french_words.csv")
+
 data = pd.read_csv("Day-031/resources/data/french_words.csv")
-print(data.head)
-
-
+df = pd.DataFrame.to_dict(data, orient='records')
+# french_data = df['French']
+# english_data = df['English']
+# print(df)
 # ---- Functions ----
 def wrong():
+    ran = random.choice(df)
+    card.itemconfig(title_label, text=list(ran.keys())[0])
+    card.itemconfig(word_label, text=ran["French"])
+     
 
-    pass
+
+    print("wrong was pressed")
 
 def right():
-    pass
+    ran = random.choice(df)
+    card.itemconfig(title_label, text="French")
+    card.itemconfig(word_label, text=ran["French"])
+    print("right was pressed")
 
 
 
@@ -34,7 +43,8 @@ def right():
 
 # -- canvas --
 card = tk.Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
-card_front_image = tk.PhotoImage(file="Day-031/resources/images/card_front.png")
+card_front_image = tk.PhotoImage(file="resources/images/card_front.png")
+card_back_image = tk.PhotoImage(file="resources/images/card_back.png")
 card.create_image(400, 263, image=card_front_image,)
 # -- Title Label --
 title_label = card.create_text(400, 150, text="Title", fill="black", font=("Ariel", 40, "italic"))

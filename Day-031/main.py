@@ -4,32 +4,38 @@ import random
 
 # ---- Variables ----
 BACKGROUND_COLOR = "#B1DDC6"
-ran = {}
 
 
+
+# data = pd.read_csv("Day-031/resources/data/french_words.csv")
+# df = pd.DataFrame.to_dict(data, orient='records')
 data = pd.read_csv("Day-031/resources/data/french_words.csv")
-df = pd.DataFrame.to_dict(data, orient='records')
-
+df = data.to_dict(orient='records')
+ran = {}
 
 # ---- Functions ----
 
 def right():
+    global ran, flip_timer
+    app.after_cancel(flip_timer)
     ran = random.choice(df)
-    card.itemconfig(title_label, text="French")
-    card.itemconfig(word_label, text=ran["French"])
+    card.itemconfig(title_label, text="French", fill="black")
+    card.itemconfig(word_label, text=ran["French"], fill='black')
+    card.itemconfig(back_ground_card, image=card_front_image)
+    flip_timer =  app.after(3000, func=flip_card)
 
 def flip_card():
     global ran
-    card.itemconfig(title_label, text="English")
-    card.itemconfig(word_label, text=ran["English"])
-    card.itemconfig()
+    card.itemconfig(title_label, text="English", fill="white")
+    card.itemconfig(word_label, text=ran["English"], fill="white")
+    card.itemconfig(back_ground_card, image=card_back_image)
 
 # ------ Layout ------
 app = tk.Tk()
 app.title("Flash Card")
 app.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 print(ran)
-app.after(3000, flip_card)
+flip_timer = app.after(3000, func=flip_card)
 
 # -- canvas --
 card = tk.Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
@@ -51,5 +57,8 @@ wrong_button.grid(row=1, column=0)
 right_btn_img = tk.PhotoImage(file="Day-031/resources/images/right.png")
 right_button = tk.Button(image=right_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR, command=right)
 right_button.grid(row=1, column=1)
+
+right()
+
 
 app.mainloop()

@@ -5,12 +5,13 @@ import random
 # ---- Variables ----
 BACKGROUND_COLOR = "#B1DDC6"
 
-
-
-# data = pd.read_csv("Day-031/resources/data/french_words.csv")
-# df = pd.DataFrame.to_dict(data, orient='records')
-data = pd.read_csv("Day-031/resources/data/french_words.csv")
-df = data.to_dict(orient='records')
+try: 
+    data = pd.read_csv("Day-031/resources/data/words_to_learn.csv")
+except FileNotFoundError:
+    original_data = pd.read_csv("Day-031/resources/data/french_words.csv")
+    df = original_data.to_dict(orient='records')
+else:
+    df = data.to_dict(orient='records')
 ran = {}
 
 # ---- Functions ----
@@ -29,6 +30,12 @@ def flip_card():
     card.itemconfig(title_label, text="English", fill="white")
     card.itemconfig(word_label, text=ran["English"], fill="white")
     card.itemconfig(back_ground_card, image=card_back_image)
+
+def is_known():
+    df.remove(ran)
+    data = pd.DataFrame(df)
+    data.to_csv("Day-031/resources/data/words_to_learn.csv", index=False)    
+    right()
 
 # ------ Layout ------
 app = tk.Tk()
@@ -55,7 +62,7 @@ wrong_button.grid(row=1, column=0)
 
 # -- Ok Button --
 right_btn_img = tk.PhotoImage(file="Day-031/resources/images/right.png")
-right_button = tk.Button(image=right_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR, command=right)
+right_button = tk.Button(image=right_btn_img, highlightthickness=0, bg=BACKGROUND_COLOR, command=is_known)
 right_button.grid(row=1, column=1)
 
 right()

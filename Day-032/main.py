@@ -8,9 +8,15 @@ dotenv.load_dotenv()
 my_email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")
 
-print(my_email)
-
-# connection = smtplib.SMTP("smtp.gmail.com")
-# connection.starttls()
-
 # "smtp.mail.yahoo.com"
+print("Connecting to Gmail...")
+with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+    connection.starttls()
+    connection.login(my_email, password=password)
+    connection.sendmail(
+        from_addr=my_email, 
+        to_addrs="marcolino_perez@yahoo.com", 
+        msg="Subject:Hello\n\n klk manin como tu ta"
+        )
+
+

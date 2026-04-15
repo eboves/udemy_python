@@ -35,20 +35,36 @@ now = dt.datetime.now()
 today = now.weekday()
 # print(today)
 
-df = pd.read_csv("/Users/elvisboves/Desktop/projects/python/Angela_Yu/udemy_python/Day-032/quotes.txt", sep=",")
-data = df.to_dict()
+######################################### THIS IS THE WAY I DID IT ##############################################
+
+# df = pd.read_csv("/Users/elvisboves/Desktop/projects/python/Angela_Yu/udemy_python/Day-032/quotes.txt", sep=",")
+# data = df.to_dict()
+
+# quotes = list(data.values())
+# dict_quotes = quotes[0]
+# # print(type(dict_quotes))
+# quotes = []
+# for key, value in dict_quotes.items():
+#     quotes.append(value)
+# quote = random.choice(quotes)
+
+# if today == 1:
+#     print("Connecting to Gmail...")
+#     with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+#         connection.starttls()
+#         connection.login(user=my_email, password=password)
+#         connection.sendmail(
+#             from_addr=my_email, to_addrs="marcolino_perez@yahoo.com",
+#             msg=f"Subject:Quote\n\n {quote}"
+#             )
 
 
-quotes = list(data.values())
-dict_quotes = quotes[0]
-# print(type(dict_quotes))
-quotes = []
-for key, value in dict_quotes.items():
-    quotes.append(value)
-
-quote = random.choice(quotes)
+######################################### THIS IS ANGELA's WAY  ##############################################
 
 if today == 1:
+    with open("/Users/elvisboves/Desktop/projects/python/Angela_Yu/udemy_python/Day-032/quotes.txt") as quote_files:
+        all_quotes = quote_files.readlines()
+        quote = random.choice(all_quotes)
     print("Connecting to Gmail...")
     with smtplib.SMTP("smtp.gmail.com", 587) as connection:
         connection.starttls()
@@ -57,8 +73,6 @@ if today == 1:
             from_addr=my_email, to_addrs="marcolino_perez@yahoo.com",
             msg=f"Subject:Quote\n\n {quote}"
             )
-
-
 
 
 

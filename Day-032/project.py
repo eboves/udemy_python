@@ -3,6 +3,7 @@ import random
 import datetime as dt
 import dotenv
 import os
+import smtplib
 
 dotenv.load_dotenv()
 
@@ -19,7 +20,7 @@ df = pd.read_csv("Day-032/birthdays.csv", index_col=False)
 birthday_month = list(df["month"])
 birthday_day = list(df["day"])
 birthday_name = list(df["name"])
-email = list(df["email"])
+birthday_email = list(df["email"])
 
 # 2. Check if today matches a birthday in the birthdays.csv
 now = dt.datetime.now()
@@ -29,6 +30,7 @@ day = now.day
 if (month in birthday_month) and (day in birthday_day):
     index_month = birthday_month.index(month)
     birthday_person = birthday_name[index_month]
+    birthday_person_email = birthday_email[index_month]
 
     letters_list = [file for file in os.listdir(dir) if file.endswith(".txt")]
     random_letter = random.choice(letters_list)
@@ -40,7 +42,15 @@ if (month in birthday_month) and (day in birthday_day):
     change_name = change_name.replace("[NAME]", birthday_person)
     with open(f"Day-032/letter_templates/{random_letter}", 'w') as file:
         file.write(change_name)
-
+    print("Sending email")
+    with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+        connection.starttls()
+        connection.login(user=email, password=password)
+        connection.sendmail(
+            from_addr=email,
+            to_addrs=birthday_person_email,
+            msg=f"Subject: Happy Birth Day {birthday_person}!\n\n {change_name}")
+    
     
 
 

@@ -8,6 +8,7 @@ Working with API, using the International Space Station API
 import requests
 from tkinter import *
 import datetime as dt
+import smtplib as smtp
 
 ########################################### THIS IS FOR THE ISS ###########################################
 # response = requests.get(url="http://api.open-notify.org/iss-now.json")
@@ -74,8 +75,13 @@ import datetime as dt
 
 ########################################### This is for the ISS using datetime and sunrise/sunset to know how far is from me ###########################################
 
+
+
+
+
 MY_LAT = 27.664827
 MY_LNG = -81.515755
+
 
 response = requests.get(url="http://api.open-notify.org/iss-now.json")
 response.raise_for_status()
@@ -85,9 +91,9 @@ data = response.json()
 iss_latitude = float(data["iss_position"]["latitude"])
 iss_longitude = float(data["iss_position"]["longitude"])
 
-# iss_latitude = 31.459643
-# iss_longitude = -80.948332
-# print(iss_latitude, iss_longitude)
+iss_latitude = 31.459643
+iss_longitude = -80.948332
+print(iss_latitude, iss_longitude)
 
 
 #create a function that returns True if ISS is nearby and False if is not. if True and is dark, then send email
@@ -110,7 +116,9 @@ def with_in_range():
     
     return FALSE
 
-# print(with_in_range())
+# in_range = with_in_range()
+in_range = True
+# print(in_range)
 
 parameters = {
     "lat": MY_LAT,
@@ -118,22 +126,33 @@ parameters = {
     "formatted": 0,
 }
 
-response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-response.raise_for_status()
-data = response.json()
-sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
-sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
+# response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+# response.raise_for_status()
+# data = response.json()
 
-print(sunrise, "sunrise")
-print(sunset, "sunset")
+# sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0]) - 4
+# sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0]) - 4
 
 time_now = dt.datetime.now()
-print(time_now)
+# time = str(time_now).split(" ")[1].split(":")[0]
+
+
+sunrise = 6
+sunset = 19
+time = 4
+
+
+if (time < sunrise or time > sunset) and in_range : 
+    with smtp.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        
+else:
+    print("na")
 
 #If the ISS is close to my current position
 # and it is currently dark
 # Then send me an email to tell me to look up.
-# BONUS: run the code every 60 seconds.
+# BONUS: run the code every 60 seconds.ßß
 
 
 

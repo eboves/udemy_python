@@ -9,6 +9,8 @@ import requests
 from tkinter import *
 import datetime as dt
 import smtplib as smtp
+import dotenv 
+import os
 
 ########################################### THIS IS FOR THE ISS ###########################################
 # response = requests.get(url="http://api.open-notify.org/iss-now.json")
@@ -87,7 +89,7 @@ response = requests.get(url="http://api.open-notify.org/iss-now.json")
 response.raise_for_status()
 data = response.json()
 
-# print("Fetching data...")
+print("Fetching data...")
 iss_latitude = float(data["iss_position"]["latitude"])
 iss_longitude = float(data["iss_position"]["longitude"])
 
@@ -126,26 +128,35 @@ parameters = {
     "formatted": 0,
 }
 
-# response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-# response.raise_for_status()
-# data = response.json()
+response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+response.raise_for_status()
+data = response.json()
 
-# sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0]) - 4
-# sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0]) - 4
+sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0]) - 4
+sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0]) - 4
 
 time_now = dt.datetime.now()
-# time = str(time_now).split(" ")[1].split(":")[0]
+time = str(time_now).split(" ")[1].split(":")[0]
 
 
-sunrise = 6
-sunset = 19
-time = 4
+# sunrise = 6
+# sunset = 19
+# time = 4
 
+dotenv.load_dotenv()
+
+my_email = os.getenv("EMAIL")
+my_password = os.getenv("PASSWORD")
 
 if (time < sunrise or time > sunset) and in_range : 
-    with smtp.SMTP("smtp.gmail.com") as connection:
+    with smtp.SMTP("smtp.gmail.com", 587) as connection:
         connection.starttls()
-        
+        connection.login(user=my_email, password=my_password)
+        connection.sendmail(
+            from_addr=my_email, to_addrs="marcolino_perez@yahoo.com",
+            msg=f"Subject:Quote\n\n The SSI is passing nearby!!!!"
+            )
+
 else:
     print("na")
 

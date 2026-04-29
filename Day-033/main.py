@@ -113,7 +113,7 @@ def with_in_range():
     lng_down = MY_LNG - 5
     lng_upper = MY_LNG + 5
 
-    if (lat_down < iss_latitude < lat_upper) and (lng_down < iss_longitude < lng_upper):
+    if (lat_down <= iss_latitude <= lat_upper) and (lng_down <= iss_longitude <= lng_upper):
         return True
     
     return FALSE

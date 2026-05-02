@@ -1,14 +1,32 @@
 import tkinter as tk
+import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 THEME_COLOR = "#375362"
 
 class QuizUi:
     def __init__(self):
+
         self.window = tk.Tk()
         self.window.title("Quizzler")
-        self.window.config(background=THEME_COLOR)
-        self.canvas = tk.Canvas(height=250, width=300)
-        self.canvas_text = self.canvas.create_text(125,15, text=E)
+        self.window.config(background=THEME_COLOR, padx=20,pady=20)
+
+        self.canvas = tk.Canvas(height=250, width=300, background="black")
+        self.canvas_text = self.canvas.create_text(125,15, text="HELLO!!", font=("Ariel", 20, "italic"), fill="white")
+        self.canvas.grid(row=1,column=0, columnspan=2)
+
+        self.right_btn_img = tk.PhotoImage(file=os.path.join(SCRIPT_DIR, "images/true.png"))
+        self.right_btn = tk.Button(image=self.right_btn_img, highlightthickness=0, pady=20)
+        self.right_btn.grid(row=2, column=0)
+
+        self.wrong_btn_img = tk.PhotoImage(file=os.path.join(SCRIPT_DIR, "images/false.png"))
+        self.wrong_btn = tk.Button(image=self.wrong_btn_img, highlightthickness=0, pady=20)
+        self.wrong_btn.grid(row=2, column=1)
+
+        self.score = tk.Label(text="Score: 0",background=THEME_COLOR, pady=20)
+        self.score.grid(row=0, column=1)
+
 
 
 

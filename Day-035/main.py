@@ -28,14 +28,17 @@ weather_id = first_id[0]['id']
 weather_description = first_id[0]['description']
 
 
-print(f"ID: {weather_id}, Description:{weather_description}")
+# print(f"ID: {weather_id}, Description:{weather_description}")
 
-forecast = {}
+will_rain = False
 for i in list_days:
     id_weather = i['weather'][0]['id']
-    description_weather = i['weather'][0]['description']
-    print(f"ID: {id_weather}, Description: {description_weather}")
-
+    if id_weather < 700: 
+        will_rain = True
+    # description_weather = i['weather'][0]['description']
+    # print(f"ID: {id_weather},")
+if will_rain:
+    print("Bring an Umbrella")
 
 
 

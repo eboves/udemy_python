@@ -44,19 +44,9 @@ if will_rain:
     # client = Client(account_sid, auth_token)
     client = Client(account_sid, auth_token)
     message = client.messages.create(
-        to="+16468183686",
-        from_="+18777804236",
+        to=os.getenv("PERSONAL_NUMBER"),
+        from_=os.getenv("TWILIO_NUMBER"),
         body="Klk papa desde TWILIO",
     )
     print(message.status)
-    
-
-
-
-
-
-
-# message = client.messages.create(
-#     to='[HandsetNumber]'
-# )
 

@@ -2,6 +2,7 @@
 import requests
 import dotenv
 import os
+from twilio.rest import Client
 
 dotenv.load_dotenv()
 
@@ -16,7 +17,9 @@ params = {
     "appid": api_key,
     'cnt': 4
 }
-
+# auth_token = '[AuthToken]'
+account_sid = os.getenv("ACCOUNT_SID")
+auth_token = os.getenv("AUTH_TOKEN")
 
 response = requests.get(URL, params=params)
 # response = requests.get(URL)
@@ -35,10 +38,25 @@ for i in list_days:
     id_weather = i['weather'][0]['id']
     if id_weather < 700: 
         will_rain = True
-    # description_weather = i['weather'][0]['description']
-    # print(f"ID: {id_weather},")
+    description_weather = i['weather'][0]['description']
+    print(f"ID: {id_weather}, DESCRIPTION: {description_weather}")
 if will_rain:
-    print("Bring an Umbrella")
+    # client = Client(account_sid, auth_token)
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(
+        to="+16468183686",
+        from_="+18777804236",
+        body="Klk papa desde TWILIO",
+    )
+    print(message.status)
+    
 
 
+
+
+
+
+# message = client.messages.create(
+#     to='[HandsetNumber]'
+# )
 

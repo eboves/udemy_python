@@ -1,8 +1,43 @@
+import requests
+import dotenv
+import os
+
+
+dotenv.load_dotenv()
+
+
+
+# replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
+# url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo'
+# r = requests.get(url)
+# data = r.json()
+
+
+# URL = 'https://www.alphavantage.co/query?'
+
+
 STOCK_NAME = "TSLA"
 COMPANY_NAME = "Tesla Inc"
+TIME_SERIES = 'TIME_SERIES_DAILY'
+API_KEY = os.getenv("ALPHAVANTAGE")
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
+
+params = {
+    'function': TIME_SERIES,
+    'symbol': STOCK_NAME,
+    'apikey':API_KEY,
+}
+
+response = requests.get(STOCK_ENDPOINT, params=params)
+response.raise_for_status()
+data = response.json()
+time_series = data['Time Series (Daily)']
+day_data = [value for (key, value) in time_series.items()]
+
+print(day_data)
+
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").

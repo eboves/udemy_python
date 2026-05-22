@@ -33,10 +33,25 @@ params = {
 response = requests.get(STOCK_ENDPOINT, params=params)
 response.raise_for_status()
 data = response.json()
+
+previuos_day = []
+
 time_series = data['Time Series (Daily)']
+# todays = time_series.keys()
+todays = time_series['2026-05-21']['4. close']
+print(todays)
+for d in range(0, 2):
+    pass
+    # print(time_series[d])
+    # previuos_day.append(time_series[d]['4. close'])
+    # print(previuos_day)
+# print(previuos_day)
+
+
 day_data = [value for (key, value) in time_series.items()]
 
-print(day_data)
+
+# print(data)
 
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily

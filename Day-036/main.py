@@ -16,40 +16,50 @@ dotenv.load_dotenv()
 # URL = 'https://www.alphavantage.co/query?'
 
 
-STOCK_NAME = "TSLA"
-COMPANY_NAME = "Tesla Inc"
+STOCK_NAME = "IBM"
+# COMPANY_NAME = "Tesla Inc"
 TIME_SERIES = 'TIME_SERIES_DAILY'
 API_KEY = os.getenv("ALPHAVANTAGE")
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
 
-params = {
+stocks_params = {
     'function': TIME_SERIES,
     'symbol': STOCK_NAME,
     'apikey':API_KEY,
 }
 
-response = requests.get(STOCK_ENDPOINT, params=params)
+response = requests.get(STOCK_ENDPOINT, params=stocks_params)
 response.raise_for_status()
 data = response.json()
 
 previuos_day = []
 
 time_series = data['Time Series (Daily)']
-# todays = time_series.keys()
-todays = time_series['2026-05-21']['4. close']
-print(todays)
-for d in range(0, 2):
-    pass
-    # print(time_series[d])
-    # previuos_day.append(time_series[d]['4. close'])
-    # print(previuos_day)
-# print(previuos_day)
+# # todays = time_series.keys()
+# todays = time_series['2026-05-29']['4. close']
+# # print(todays)
+# for d in range(0, 2):
+#     pass
+#     # print(time_series[d])
+#     # previuos_day.append(time_series[d]['4. close'])
+#     # print(previuos_day)
+# # print(previuos_day)
 
 
 day_data = [value for (key, value) in time_series.items()]
+# yesterday = float(day_data[1]['4. close'])
+# day_before_yesterday = float(day_data[2]['4. close'])
+yesterday = float(275.56)
+day_before_yesterday = float(215.67)
+print(f"Yesterday's value = {yesterday}; Day_Before_Yesterday = {day_before_yesterday}")
+positive_difference = abs(((yesterday - day_before_yesterday)/day_before_yesterday)*100)
+if positive_difference > 5:
+    print("Get News")
+print(positive_difference)
 
+news_response = 
 
 # print(data)
 

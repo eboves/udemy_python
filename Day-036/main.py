@@ -1,6 +1,7 @@
 import requests
 import dotenv
 import os
+from datetime import date
 
 
 dotenv.load_dotenv()
@@ -16,18 +17,28 @@ dotenv.load_dotenv()
 # URL = 'https://www.alphavantage.co/query?'
 
 
-STOCK_NAME = "IBM"
+STOCK_NAME = "TSLA"
 # COMPANY_NAME = "Tesla Inc"
 TIME_SERIES = 'TIME_SERIES_DAILY'
 API_KEY = os.getenv("ALPHAVANTAGE")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
-
+# TODAYS_DATE = date.today().strftime("%Y-%m-%d")
+# print(TODAYS_DATE)
+TODAYS_DATE = '2026-05-30'
 stocks_params = {
     'function': TIME_SERIES,
     'symbol': STOCK_NAME,
     'apikey':API_KEY,
+}
+
+# https://newsapi.org/v2/everything?q=tesla&from=2026-04-30&sortBy=publishedAt&apiKey=729f32ee673b494198c9a315a58158ee
+news_params = {
+    'q': STOCK_NAME,
+    'from': TODAYS_DATE,
+    'apiKey': NEWS_API_KEY,
 }
 
 response = requests.get(STOCK_ENDPOINT, params=stocks_params)
@@ -53,15 +64,21 @@ day_data = [value for (key, value) in time_series.items()]
 # day_before_yesterday = float(day_data[2]['4. close'])
 yesterday = float(275.56)
 day_before_yesterday = float(215.67)
-print(f"Yesterday's value = {yesterday}; Day_Before_Yesterday = {day_before_yesterday}")
+# print(f"Yesterday's value = {yesterday}; Day_Before_Yesterday = {day_before_yesterday}")
 positive_difference = abs(((yesterday - day_before_yesterday)/day_before_yesterday)*100)
 if positive_difference > 5:
-    print("Get News")
-print(positive_difference)
+    news_response = requests.get(NEWS_ENDPOINT,params=news_params)
+    news_data = news_response.json()
+    first_articles = news_data['articles'][:3]
+    # head_lines = 
+    print(first_articles)
+# print(positive_difference)
 
-news_response = 
+# news_response = 
 
 # print(data)
+
+# datetime.today().strftime('%Y-%m-%d')
 
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily

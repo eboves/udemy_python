@@ -15,7 +15,24 @@ user_params = {
     'notMinor': 'yes'
 
 }
+
 # THIS IS CREATING USER NAME
 
 # response = requests.post(PIXELA_END_POINT, json=user_params)
 # print(response.text)
+
+graph_config = {
+    'id': 'graph1',
+    'name': 'coding',
+    'unit': 'km',
+    'type': 'float',
+    'color': 'kuro',
+}
+headers = {
+    'X-USER-TOKEN': token
+}
+graph_end_point = f"{PIXELA_END_POINT}/{username}/graphs"
+
+response = requests.post(url=graph_end_point, json=graph_config, headers=headers)
+print(response.text)
+

@@ -42,10 +42,15 @@ print(activity, duration, calories)
 
 
 
+body = {
+    'workouts': {
+        
+    }
+}
 
 
-
-response_sheets = requests.get(BASED_URL_SHEETS)
+# response_sheets = requests.get(BASED_URL_SHEETS)
+response_sheets = requests.post(BASED_URL_SHEETS)
 result_sheets = response_sheets.json()
 
 # print(result_nutrition)

@@ -44,7 +44,10 @@ print(activity, duration, calories)
 
 body = {
     'workouts': {
-        
+        "Exercise": activity,
+        "Duration": duration,
+        "Time": today_time,
+        "Date": today_date,
     }
 }
 
